@@ -1,0 +1,26 @@
+{"eon":
+    {   "temp":21,
+        "humidity":87
+    }
+}
+
+
+export default (request) => { 
+    const kvstore = require('kvstore');
+    const xhr = require('xhr');
+    var temperature =   request.message.temp;
+    var humidity =   request.message.humidity;
+    var deviceId    =   request.message.deviceId;
+    console.log('Message  received for DeviceId ',deviceId);
+    delete request.message.deviceId;
+    
+    
+    
+    var eonMessage  =   {'temp':temperature,'humidity':humidity};
+    
+    //request.message=eonMessage;
+    request.message.eon=eonMessage;
+    console.log('request',request.message.eon); // Log the request envelope passed 
+    
+    return request.ok(); // Return a promise when you're done 
+}
